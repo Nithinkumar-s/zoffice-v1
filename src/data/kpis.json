@@ -1,0 +1,5 @@
+[
+  { "id": "leave", "label": "Leave Balance", "value": "12 / 24", "color": "primary" },
+  { "id": "hoursToday", "label": "Hours Today", "value": "6.5 / 8", "color": "secondary" },
+  { "id": "hours", "label": "Hours This Week", "value": "32 / 40", "color": "primary" }
+]
