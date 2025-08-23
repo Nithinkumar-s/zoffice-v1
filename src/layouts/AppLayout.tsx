@@ -1,50 +1,113 @@
 import React from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
-import { Home, LogOut } from 'lucide-react'
+import { Outlet, useNavigate, useLocation } from 'react-router-dom'
+import { LogOut, User as UserIcon, KeyRound, IdCard, ChevronLeft } from 'lucide-react'
+import { useDispatch } from 'react-redux'
+import { logout } from '@/features/auth/authSlice'
 
-interface NavItem { label: string; to: string; icon: React.ReactNode }
-
-const navItems: NavItem[] = [
-	{ label: 'Home', to: '/home', icon: <Home className="h-5 w-5" /> }
-]
-
+// Shared application layout with persistent navbar (excluded on login route by routing structure)
 const AppLayout: React.FC = () => {
+	const dispatch = useDispatch()
+	const navigate = useNavigate()
+	const location = useLocation()
+	const showBack = location.pathname !== '/home' && location.pathname !== '/'
+
+	const MenuItem: React.FC<{ label: string; onSelect: () => void; destructive?: boolean; icon?: React.ReactNode }> = ({ label, onSelect, destructive, icon }) => (
+		<button
+			onClick={onSelect}
+			className={`w-full text-left text-sm px-3 py-2 rounded-md transition flex items-center gap-2 ${destructive ? 'text-red-300 hover:text-red-200 hover:bg-red-500/10' : 'text-white/80 hover:text-white hover:bg-white/10'}`}
+			role="menuitem"
+		>
+			{icon}
+			<span>{label}</span>
+		</button>
+	)
+
+	const ProfileMenu: React.FC = () => {
+		const [open, setOpen] = React.useState(false)
+		const menuRef = React.useRef<HTMLDivElement | null>(null)
+		const btnRef = React.useRef<HTMLButtonElement | null>(null)
+
+		React.useEffect(() => {
+			const onClick = (e: MouseEvent) => {
+				if (!menuRef.current) return
+				if (menuRef.current.contains(e.target as Node) || btnRef.current?.contains(e.target as Node)) return
+				setOpen(false)
+			}
+			const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false) }
+			document.addEventListener('click', onClick)
+			document.addEventListener('keydown', onKey)
+			return () => { document.removeEventListener('click', onClick); document.removeEventListener('keydown', onKey) }
+		}, [])
+
 		return (
-			<div className="min-h-screen w-full flex bg-background text-foreground">
-				<aside
-					className="group/sidebar relative z-40 w-16 hover:w-56 focus-within:w-56 shrink-0 border-r border-[hsl(var(--border))] bg-white flex flex-col transition-[width] duration-300 ease-in-out"
-				>
-					<div className="h-14 flex items-center gap-2 px-3 border-b border-[hsl(var(--border))]">
-						<span className="inline-flex h-8 w-8 flex-none items-center justify-center rounded-md bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] text-sm font-bold">z</span>
-						<span className="font-semibold tracking-tight whitespace-nowrap overflow-hidden opacity-0 translate-x-2 transition-all duration-300 group-hover/sidebar:opacity-100 group-hover/sidebar:translate-x-0 group-hover/sidebar:overflow-visible focus-within:opacity-100 focus-within:translate-x-0">zOffice</span>
+			<div className="relative">
+				<button
+					ref={btnRef}
+						onClick={() => setOpen(o => !o)}
+						className="group flex items-center gap-2 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+						aria-haspopup="menu"
+						aria-expanded={open}
+					>
+						<span className="h-9 w-9 rounded-full bg-white/10 ring-1 ring-white/15 flex items-center justify-center text-xs font-semibold tracking-wide backdrop-blur-sm select-none">NS</span>
+						<span className="hidden md:inline text-white/80 group-hover:text-white text-sm font-medium">Nithin</span>
+						<svg className="h-4 w-4 text-white/60 group-hover:text-white/70 transition" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.939l3.71-3.71a.75.75 0 111.06 1.061l-4.24 4.24a.75.75 0 01-1.06 0L5.25 8.27a.75.75 0 01-.02-1.06z" clipRule="evenodd" /></svg>
+				</button>
+				{open && (
+					<div
+						ref={menuRef}
+						className="absolute right-0 mt-2 w-48 rounded-md border border-white/10 bg-[#0B153F]/95 backdrop-blur-sm shadow-lg p-1 z-50 animate-in fade-in slide-in-from-top-1"
+						role="menu"
+						aria-label="User menu"
+					>
+						<MenuItem label="Profile" icon={<UserIcon className="h-4 w-4" />} onSelect={() => {}} />
+						<MenuItem label="My Details" icon={<IdCard className="h-4 w-4" />} onSelect={() => {}} />
+						<MenuItem label="Change Password" icon={<KeyRound className="h-4 w-4" />} onSelect={() => {}} />
+						<div className="my-1 h-px bg-white/10" />
+						<MenuItem label="Logout" icon={<LogOut className="h-4 w-4" />} destructive onSelect={() => { dispatch(logout()); navigate('/'); }} />
 					</div>
-					<nav className="flex-1 overflow-y-auto p-2 space-y-1" aria-label="Main navigation">
-						{navItems.map(item => (
-							<NavLink
-								key={item.label}
-								to={item.to}
-								className={({ isActive }) => [
-									'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
-									isActive ? 'bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))]' : 'text-foreground/60 hover:text-foreground hover:bg-foreground/5'
-								].join(' ')}
-							>
-								<span className="flex h-5 w-5 items-center justify-center text-current">{item.icon}</span>
-								<span className="whitespace-nowrap overflow-hidden opacity-0 translate-x-2 transition-[opacity,transform] duration-300 group-hover/sidebar:opacity-100 group-hover/sidebar:translate-x-0 focus-within:opacity-100 focus-within:translate-x-0">{item.label}</span>
-							</NavLink>
-						))}
-					</nav>
-					<div className="p-2 border-t border-[hsl(var(--border))] mt-auto">
-						<button className="w-full flex items-center gap-3 rounded-md px-3 py-2 text-xs font-medium text-foreground/60 hover:text-foreground hover:bg-foreground/5 transition-colors">
-							<LogOut className="h-4 w-4" />
-							<span className="whitespace-nowrap overflow-hidden opacity-0 translate-x-2 transition-[opacity,transform] duration-300 group-hover/sidebar:opacity-100 group-hover/sidebar:translate-x-0">Logout</span>
-						</button>
-					</div>
-				</aside>
-				<main className="flex-1 min-w-0 p-5 md:p-8">
-					<Outlet />
-				</main>
+				)}
 			</div>
 		)
+	}
+
+	return (
+		<div className="min-h-screen flex flex-col bg-background text-foreground">
+			{/* Fixed navbar so vertical overflow in content never affects its width/position */}
+			<header className="fixed top-0 left-0 right-0 w-full z-50 h-14 flex items-center px-4 md:px-6 text-white border-b border-white/5 shadow-[0_2px_4px_-1px_rgba(0,0,0,0.45),0_1px_0_0_rgba(255,255,255,0.04)] bg-[linear-gradient(135deg,#03093A_0%,#041247_35%,#4dafff_52%,#061B6F_100%)]">
+				<div className="flex items-center gap-3 font-semibold tracking-tight select-none">
+					{/* Logo */}
+					<img
+						src="/logo.svg"
+						alt="zOffice Logo"
+						className="h-8 w-8 object-contain select-none"
+						onError={(e) => { (e.currentTarget.style.display = 'none'); (e.currentTarget.nextElementSibling as HTMLElement)?.classList.remove('sr-only') }}
+					/>
+					<span className="sr-only inline-flex h-8 w-8 items-center justify-center rounded-md bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] text-sm font-bold">z</span>
+					<span className="hidden sm:inline">zOffice</span>
+				</div>
+				<div className="ml-auto flex items-center gap-4 text-sm">
+					<ProfileMenu />
+				</div>
+				<div className="absolute bottom-0 left-0 right-0 h-px bg-[linear-gradient(90deg,transparent,#4dafff80,transparent)]" />
+			</header>
+			{/* Content wrapper with top padding to avoid being hidden behind fixed header */}
+			<div className="flex-1 pt-14">
+				<div className="max-w-7xl mx-auto px-4 md:px-6">
+					{showBack && (
+						<button
+							onClick={() => { if (window.history.length > 1) navigate(-1); else navigate('/home'); }}
+							className="mt-4 mb-2 inline-flex items-center gap-1 text-sm text-foreground/70 hover:text-foreground transition font-medium"
+						>
+							<ChevronLeft className="h-4 w-4" />
+							<span>Back</span>
+						</button>
+					)}
+				</div>
+				<Outlet />
+			</div>
+			<footer className="py-6 text-center text-xs text-muted-foreground border-t border-[hsl(var(--border))]">© {new Date().getFullYear()} zLink Inc. All Rights Reserved.</footer>
+		</div>
+	)
 }
 
 export default AppLayout

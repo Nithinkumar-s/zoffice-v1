@@ -1,13 +1,15 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import kpisData from '@/data/kpis.json'
-import { CalendarClock, Leaf, IdCard, User, Users, Lock, FileText, FolderOpen, BarChart2, HelpCircle } from 'lucide-react'
+import { CalendarClock, Leaf, IdCard, Users, FileText, FolderOpen, BarChart2, HelpCircle } from 'lucide-react'
 // Sparkline removed from this file; handled inside HoursCard
 import HoursCard from '@/components/dashboard/HoursCard'
 
 // Home Dashboard Page
 const HomePage: React.FC = () => {
+	const navigate = useNavigate()
 	type KPI = { id: string; label: string; value: string; color: string }
 	const all = kpisData as KPI[]
 	const leaveKpi = all.find(k => k.id === 'leave')
@@ -17,18 +19,7 @@ const HomePage: React.FC = () => {
 	// (Removed Leave & Allocation chart data per request)
 
 	return (
-		<div className="min-h-screen flex flex-col bg-background text-foreground">
-			<header className="h-14 bg-[#03093A] text-white flex items-center px-6 shadow-sm">
-				<div className="flex items-center gap-2 font-semibold tracking-tight">
-					<span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] text-sm font-bold">z</span>
-					<span className="hidden sm:inline">zOffice</span>
-				</div>
-				<div className="ml-auto flex items-center gap-4 text-sm">
-					<button className="text-white/80 hover:text-white transition">Logout</button>
-				</div>
-			</header>
-			<div className="h-0.5 bg-gradient-to-r from-[hsl(var(--primary))] via-[hsl(var(--secondary))] to-[hsl(var(--accent))]" />
-			<main className="flex-1 mx-auto w-full max-w-7xl px-6 md:px-10 py-10 space-y-10">
+		<main className="mx-auto w-full max-w-7xl px-6 md:px-10 py-10 space-y-10">
 				{/* Unified Welcome + KPIs */}
 				<section>
 					<Card className="border-[hsl(var(--border))] backdrop-blur-sm bg-gradient-to-tr from-[#f6f9ff] via-white to-[#f3f7ff]">
@@ -40,7 +31,7 @@ const HomePage: React.FC = () => {
 										<p className="mt-1 text-sm text-muted-foreground">Here's your summary for today.</p>
 									</div>
 									<div className="flex flex-wrap gap-3">
-										<Button size="sm" className="bg-[hsl(var(--primary))] text-white">Open Time Sheet</Button>
+										<Button size="sm" className="bg-[hsl(var(--primary))] text-white" onClick={() => navigate('/timesheet')}>Open Time Sheet</Button>
 										<Button size="sm" variant="outline">Request Leave</Button>
 									</div>
 								</div>
@@ -93,18 +84,16 @@ const HomePage: React.FC = () => {
 						<CardContent>
 								<div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
 								{[
-									{ label: 'Time Sheet', icon: <CalendarClock className="h-7 w-7" /> },
+									{ label: 'Time Sheet', icon: <CalendarClock className="h-7 w-7" />, to: '/timesheet' },
 									{ label: 'Leave Request', icon: <Leaf className="h-7 w-7" /> },
 									{ label: 'Leave Card', icon: <IdCard className="h-7 w-7" /> },
-									{ label: 'My Details', icon: <User className="h-7 w-7" /> },
 									{ label: 'Employee Details', icon: <Users className="h-7 w-7" /> },
-									{ label: 'Change Password', icon: <Lock className="h-7 w-7" /> },
 									{ label: 'Time Sheet Report', icon: <FileText className="h-7 w-7" /> },
 									{ label: 'Documents', icon: <FolderOpen className="h-7 w-7" /> },
 									{ label: 'Reports', icon: <BarChart2 className="h-7 w-7" /> },
 									{ label: 'Help', icon: <HelpCircle className="h-7 w-7" /> }
 								].map(a => (
-									<button key={a.label} className="group flex flex-col items-center gap-2 text-center outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))] rounded-md">
+									<button key={a.label} onClick={() => a.to && navigate(a.to)} className="group flex flex-col items-center gap-2 text-center outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))] rounded-md">
 										<span className="h-14 w-14 rounded-full border border-[hsl(var(--border))] flex items-center justify-center text-[hsl(var(--primary))] bg-white group-hover:bg-[hsl(var(--primary))]/5 transition shadow-sm">
 											{a.icon}
 										</span>
@@ -118,9 +107,7 @@ const HomePage: React.FC = () => {
 						</CardContent>
 					</Card>
 				</section>
-			</main>
-			<footer className="py-6 text-center text-xs text-muted-foreground border-t border-[hsl(var(--border))]">© {new Date().getFullYear()} zLink Inc. All Rights Reserved.</footer>
-		</div>
+		</main>
 	)
 }
 

@@ -1,0 +1,23 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logoTitle logoDesc">
+  <title id="logoTitle">zOffice Logo</title>
+  <desc id="logoDesc">Stylized letter Z formed by two ribbon shapes in blue gradients</desc>
+  <defs>
+    <linearGradient id="gradTop" x1="4" y1="4" x2="28" y2="4" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1D4ED8"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+    <linearGradient id="gradBottom" x1="4" y1="28" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#06B6D4"/>
+      <stop offset="100%" stop-color="#0EA5E9"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="32" height="32" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="1" stdDeviation="1.2" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <!-- Top ribbon -->
+    <path d="M6 6C6 5.4477 6.4477 5 7 5H25.2c.9 0 1.27 1.146.53 1.72L18.1 13.2a1 1 0 0 1-.62.21H11.7l11.64 5.38c.68.31.77 1.24.17 1.68L20 22.5 8.4 17.2A2.5 2.5 0 0 1 7 14.93V6Z" fill="url(#gradTop)"/>
+    <!-- Bottom ribbon -->
+    <path d="M26 26c0 .5523-.4477 1-1 1H6.8c-.9 0-1.27-1.146-.53-1.72L13.9 18.8a1 1 0 0 1 .62-.21h5.78L8.66 13.21c-.68-.31-.77-1.24-.17-1.68L12 9.5l11.6 5.3A2.5 2.5 0 0 1 26 17.07V26Z" fill="url(#gradBottom)"/>
+  </g>
+</svg>

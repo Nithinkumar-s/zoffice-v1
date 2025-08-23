@@ -105,10 +105,14 @@ const CarouselSection: React.FC = () => {
       onWheel={onWheel}
     >
       <div className="flex items-center gap-2 mb-1">
-        <div className="h-9 w-9 rounded-md bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] flex items-center justify-center font-semibold text-sm shadow-sm">zO</div>
-        <div>
-          <div className="text-base font-semibold leading-tight">zOffice</div>
-        </div>
+        <img
+          src="/logo.svg"
+          alt="zOffice Logo"
+          className="h-10 w-10 object-contain select-none"
+          onError={(e) => { (e.currentTarget.style.display = 'none'); (e.currentTarget.nextElementSibling as HTMLElement)?.classList.remove('sr-only') }}
+        />
+        <span className="sr-only h-10 w-10 rounded-md bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] flex items-center justify-center font-semibold text-sm shadow-sm">z</span>
+        <div className="text-base font-semibold leading-tight">zOffice</div>
       </div>
       <div className="relative flex-1 min-h-[300px]" role="group" aria-label="Information slides">
         <div className="overflow-hidden w-full h-full rounded-xl">
