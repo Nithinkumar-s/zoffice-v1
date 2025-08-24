@@ -1,6 +1,8 @@
 import React from 'react'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
-import { LogOut, User as UserIcon, KeyRound, IdCard, ChevronLeft } from 'lucide-react'
+import { LogOut, KeyRound, IdCard, ChevronLeft } from 'lucide-react'
+import MyDetailsDialog from '@/components/profile/MyDetailsDialog'
+import ChangePasswordDialog from '@/components/profile/ChangePasswordDialog'
 import { useDispatch } from 'react-redux'
 import { logout } from '@/features/auth/authSlice'
 
@@ -40,6 +42,8 @@ const AppLayout: React.FC = () => {
 
 	const ProfileMenu: React.FC = () => {
 		const [open, setOpen] = React.useState(false)
+		const [detailsOpen, setDetailsOpen] = React.useState(false)
+		const [passwordOpen, setPasswordOpen] = React.useState(false)
 		const menuRef = React.useRef<HTMLDivElement | null>(null)
 		const btnRef = React.useRef<HTMLButtonElement | null>(null)
 
@@ -75,13 +79,14 @@ const AppLayout: React.FC = () => {
 						role="menu"
 						aria-label="User menu"
 					>
-						<MenuItem label="Profile" icon={<UserIcon className="h-4 w-4" />} onSelect={() => {}} />
-						<MenuItem label="My Details" icon={<IdCard className="h-4 w-4" />} onSelect={() => {}} />
-						<MenuItem label="Change Password" icon={<KeyRound className="h-4 w-4" />} onSelect={() => {}} />
+						<MenuItem label="My Details" icon={<IdCard className="h-4 w-4" />} onSelect={() => { setDetailsOpen(true); setOpen(false); }} />
+						<MenuItem label="Change Password" icon={<KeyRound className="h-4 w-4" />} onSelect={() => { setPasswordOpen(true); setOpen(false); }} />
 						<div className="my-1 h-px bg-white/10" />
 						<MenuItem label="Logout" icon={<LogOut className="h-4 w-4" />} destructive onSelect={() => { dispatch(logout()); navigate('/'); }} />
 					</div>
 				)}
+				<MyDetailsDialog open={detailsOpen} onOpenChange={setDetailsOpen} />
+				<ChangePasswordDialog open={passwordOpen} onOpenChange={setPasswordOpen} />
 			</div>
 		)
 	}
