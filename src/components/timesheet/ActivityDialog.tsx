@@ -1,5 +1,6 @@
 import React from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { FileText } from 'lucide-react'
 import type { TimesheetEntry } from './useTimesheet'
 import { Button } from '@/components/ui/button'
 import { TimePicker } from '@/components/ui/time-picker'
@@ -61,67 +62,69 @@ const ActivityDialog: React.FC<Props> = ({ open, onOpenChange, onSubmit, initial
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-  <DialogContent className="p-0 bg-white max-w-2xl rounded-xl shadow-lg border border-border/60">
-                <DialogHeader className="px-8 pt-8 pb-4">
-                    <DialogTitle>{initial ? 'Edit Activity' : 'New Activity'}</DialogTitle>
-                </DialogHeader>
-                <div className="px-8 pt-1 pb-8 bg-white">
-          <form onSubmit={e=>{e.preventDefault(); submit();}} className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6">
-            {/* Row 1 */}
-            <div className="space-y-1">
+      <DialogContent className="p-0 bg-white max-w-xl rounded-2xl shadow-[0_8px_32px_-4px_rgba(0,0,0,0.12)] border border-black/10">
+        <div className="px-10 pt-9 pb-4">
+          <DialogHeader className="flex flex-row items-start gap-3 p-0 mb-2">
+            <div className="h-10 w-10 rounded-lg bg-[hsl(var(--primary))/0.1] flex items-center justify-center text-[hsl(var(--primary))]">
+              <FileText className="h-5 w-5" />
+            </div>
+            <div className="flex-1">
+              <DialogTitle className="text-xl font-semibold tracking-tight leading-none">
+                {initial ? 'Edit Activity' : 'New Activity'}
+              </DialogTitle>
+            </div>
+          </DialogHeader>
+          <form onSubmit={e=>{e.preventDefault(); submit();}} className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mt-4">
+            <div className="space-y-1.5">
               <label className='text-sm font-medium'>Project</label>
               <Select value={draft.project||''} onChange={v=>patch({ project: v })} options={projectOptions} />
             </div>
-            <div className="space-y-1">
-              <label className='text-sm font-medium'>Module <span className='text-xs text-muted-foreground'>(optional)</span></label>
+            <div className="space-y-1.5">
+              <label className='text-sm font-medium'>Module</label>
               <Select value={draft.module||''} onChange={v=>patch({ module: v })} options={moduleOptions} />
             </div>
-            {/* Row 2 */}
-            <div className="space-y-1">
+            <div className="space-y-1.5">
               <label className='text-sm font-medium'>Activity</label>
               <Select value={draft.activity||''} onChange={v=>patch({ activity: v })} options={activityOptions} />
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1">
-                <label className='text-sm font-medium'>Start Time</label>
+            <div className="space-y-1.5">
+              <label className='text-sm font-medium flex items-center gap-1'>Time Range {isTimeInvalid && <span className='text-destructive text-xs font-normal'>(invalid)</span>}</label>
+              <div className="grid grid-cols-2 gap-4">
                 <TimePicker value={draft.start} onChange={v=>patch({ start: v })} />
-              </div>
-              <div className="space-y-1">
-                <label className='text-sm font-medium'>End Time</label>
                 <TimePicker value={draft.end} onChange={v=>patch({ end: v })} />
-                {isTimeInvalid && <p className='text-xs text-destructive mt-1'>End must be after Start.</p>}
               </div>
+              {isTimeInvalid && <p className='text-xs text-destructive mt-1'>End must be after start.</p>}
             </div>
-            {/* Description + WFH Row */}
-            <div className="md:col-span-2 grid md:grid-cols-3 gap-6 items-start">
-              <div className="md:col-span-2 space-y-1">
-                <label className='text-sm font-medium'>Description <span className='text-xs text-muted-foreground'>(optional)</span></label>
-                <textarea
-                  className='w-full rounded-md border border-[hsl(var(--border))] bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring min-h-[110px] resize-y'
-                  value={draft.description||''}
-                  onChange={e=>patch({ description: e.target.value })}
-                  placeholder='Description'
+            <div className="md:col-span-2 space-y-1.5">
+              <label className='text-sm font-medium'>Description</label>
+              <textarea
+                className='w-full rounded-md border border-[hsl(var(--border))] bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring min-h-[100px] resize-y'
+                value={draft.description||''}
+                onChange={e=>patch({ description: e.target.value })}
+                placeholder='Description'
+              />
+            </div>
+            <div className="md:col-span-2 flex items-center justify-end gap-3 pt-2">
+              <span id='wfh-label' className='text-sm font-medium text-right'>Work From Home</span>
+              <button
+                id='wfh-switch'
+                type='button'
+                onClick={()=>patch({ wfh: !draft.wfh })}
+                role='switch'
+                aria-labelledby='wfh-label'
+                aria-checked={!!draft.wfh}
+                className={'relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring border ' + (draft.wfh
+                  ? 'bg-[hsl(var(--primary))] border-[hsl(var(--primary))]'
+                  : 'bg-muted border-[hsl(var(--border))]')}
+              >
+                <span
+                  className={'inline-block h-5 w-5 rounded-full bg-white shadow ring-1 ring-black/5 transform transition-transform ' + (draft.wfh ? 'translate-x-5' : 'translate-x-1')}
                 />
-              </div>
-              <div className="space-y-1">
-                <label className='text-sm font-medium' htmlFor='wfh-box'>Work From Home <span className='text-xs text-muted-foreground'>(optional)</span></label>
-                <div className='h-10 flex items-center rounded-md   px-4 bg-background gap-2'>
-                  <input
-                    id='wfh-box'
-                    type='checkbox'
-                    className='h-4 w-4 accent-[hsl(var(--primary))]'
-                    checked={!!draft.wfh}
-                    onChange={e=>patch({ wfh: e.target.checked })}
-                  /> 
-                </div>
-              </div>
+              </button>
             </div>
-            {/* Footer */}
-            <div className="md:col-span-2 flex justify-end items-end pt-2">
-              <div className='flex gap-2'>
-                <Button type='button' variant='outline' onClick={()=>onOpenChange(false)}>Cancel</Button>
-                <Button type='submit' disabled={disableSubmit}>{initial ? 'Update' : 'Add'}</Button>
-              </div>
+            <div className="md:col-span-2 flex justify-end gap-2 pt-4">
+              <Button type='button' variant='outline' onClick={()=>onOpenChange(false)}>Cancel</Button>
+              <Button type='submit' disabled={disableSubmit}>{initial ? 'Update Activity' : 'Add Activity'}</Button>
             </div>
           </form>
         </div>

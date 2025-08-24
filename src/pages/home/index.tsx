@@ -32,7 +32,7 @@ const HomePage: React.FC = () => {
 									</div>
 									<div className="flex flex-wrap gap-3">
 										<Button size="sm" className="bg-[hsl(var(--primary))] text-white" onClick={() => navigate('/timesheet')}>Open Time Sheet</Button>
-										<Button size="sm" variant="outline">Request Leave</Button>
+										<Button size="sm" variant="outline" onClick={() => navigate('/leave-request')}>Request Leave</Button>
 									</div>
 								</div>
 								<div className="flex flex-col gap-4 lg:w-[520px]">
@@ -85,7 +85,7 @@ const HomePage: React.FC = () => {
 								<div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
 								{[
 									{ label: 'Time Sheet', icon: <CalendarClock className="h-7 w-7" />, to: '/timesheet' },
-									{ label: 'Leave Request', icon: <Leaf className="h-7 w-7" /> },
+									{ label: 'Leave Request', icon: <Leaf className="h-7 w-7" />, to: '/leave-request' },
 									{ label: 'Leave Card', icon: <IdCard className="h-7 w-7" /> },
 									{ label: 'Employee Details', icon: <Users className="h-7 w-7" /> },
 									{ label: 'Time Sheet Report', icon: <FileText className="h-7 w-7" /> },

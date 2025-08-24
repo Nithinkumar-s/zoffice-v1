@@ -2,7 +2,9 @@ import React from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Plus, Trash2, Edit2 } from 'lucide-react'
+import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from '@/components/ui/alert-dialog'
 import ActivityDialog from '@/components/timesheet/ActivityDialog'
+import { toast } from 'sonner'
 import { useTimesheet } from '@/components/timesheet/useTimesheet'
 import { Select } from '@/components/ui/select'
 import { DatePicker } from '@/components/ui/date-picker'
@@ -74,7 +76,28 @@ const TimesheetPage: React.FC = () => {
 								{ id: 'actions', header: 'Actions', cell: ({ row }: { row: Row<TimesheetEntry> }) => (
 									<div className="flex items-center gap-2">
 										<Button variant="outline" size="sm" className="h-8 w-8 p-0" title="Edit" onClick={() => { setEditingId(row.original.id); setDialogOpen(true); }}><Edit2 className="h-4 w-4" /></Button>
-										<Button variant="outline" size="sm" className="h-8 w-8 p-0 text-red-600" title="Delete" onClick={() => remove(row.original.id)}><Trash2 className="h-4 w-4" /></Button>
+										<AlertDialog>
+											<AlertDialogTrigger asChild>
+												<Button
+													variant="outline"
+													size="sm"
+													className="h-8 w-8 p-0 text-red-600"
+													title="Delete"
+												>
+													<Trash2 className="h-4 w-4" />
+												</Button>
+											</AlertDialogTrigger>
+											<AlertDialogContent>
+												<AlertDialogHeader>
+													<AlertDialogTitle>Delete Activity</AlertDialogTitle>
+													<AlertDialogDescription>This action will permanently remove the activity.</AlertDialogDescription>
+												</AlertDialogHeader>
+												<AlertDialogFooter>
+													<AlertDialogCancel>Cancel</AlertDialogCancel>
+													<AlertDialogAction onClick={() => { remove(row.original.id); toast.success('Activity deleted') }}>Delete</AlertDialogAction>
+												</AlertDialogFooter>
+											</AlertDialogContent>
+										</AlertDialog>
 									</div>
 								)}
 							]}
@@ -90,9 +113,9 @@ const TimesheetPage: React.FC = () => {
 					if (!editingId) {
 						add();
 						const id = entries[entries.length-1]?.id
-						if (id) update(id, val)
+						if (id) { update(id, val); toast.success('Activity added') }
 					} else {
-						update(editingId, val)
+						update(editingId, val); toast.success('Activity updated')
 					}
 				}}
 			/>
