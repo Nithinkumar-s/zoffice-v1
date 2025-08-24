@@ -16,7 +16,7 @@ const LoginPage: React.FC = () => {
   }
 
   return (
-  <div className="min-h-screen w-full flex items-center justify-center bg-[#f5f7fa] px-4 py-14 text-foreground">
+  <div className="min-h-screen w-full flex items-center justify-center bg-[#f5f7fa] px-4 py-14 text-foreground overflow-auto">
       <Card className="w-full max-w-5xl border border-[hsl(var(--border))] bg-card shadow-md">
         <CardContent className="p-0">
           <div className="grid md:grid-cols-2">

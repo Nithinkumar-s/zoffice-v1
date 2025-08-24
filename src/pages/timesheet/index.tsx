@@ -33,8 +33,8 @@ const TimesheetPage: React.FC = () => {
 	// Calculate totalDay
 		const totalDay = entries.reduce((sum: number, e: TimesheetEntry) => sum + (e.hours || 0), 0)
 
-		return (
-			<main className="mx-auto w-full max-w-7xl px-6 md:px-10 pb-4 flex flex-col h-full overflow-hidden">
+			return (
+				<main className="mx-auto w-full max-w-7xl px-6 md:px-10 pb-4 flex flex-col flex-1 min-h-0 overflow-auto">
 				 {/* Progress bar is global, no loading text needed here */}
 			{/* Filters & summary (fixed height) */}
 			<div className="grid grid-cols-1 xl:grid-cols-12 gap-8 pb-6 flex-none">
@@ -75,7 +75,7 @@ const TimesheetPage: React.FC = () => {
 				</div>
 			</div>
 			{/* Scrollable table area */}
-			<div className="flex-1 min-h-0 overflow-auto pr-1">
+			<div className="flex-1 min-h-0 overflow-auto pr-1" style={{ maxHeight: '70vh' }}>
 			<Card className="shadow-sm">
 				<CardContent className="pt-6 space-y-6">
 								<DataTable<TimesheetEntry, unknown>

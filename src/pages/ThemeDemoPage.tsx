@@ -5,7 +5,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card'
 
 const ThemeDemoPage: React.FC = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
+  <div className="min-h-screen flex flex-col bg-background text-foreground overflow-auto">
       {/* Nav */}
       <header className="sticky top-0 z-10 border-b border-border/60 bg-secondary text-secondary-foreground">
         <div className="mx-auto max-w-6xl flex items-center gap-6 px-6 h-14">
