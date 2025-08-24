@@ -23,8 +23,9 @@ const TimesheetPage: React.FC = () => {
 	}
 
 	return (
-		<main className="mx-auto w-full max-w-7xl px-6 md:px-10 pb-8 space-y-10">
-			<div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+		<main className="mx-auto w-full max-w-7xl px-6 md:px-10 pb-4 flex flex-col h-full overflow-hidden">
+			{/* Filters & summary (fixed height) */}
+			<div className="grid grid-cols-1 xl:grid-cols-12 gap-8 pb-6 flex-none">
 				<div className="xl:col-span-7 space-y-6">
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
 						<div>
@@ -55,7 +56,8 @@ const TimesheetPage: React.FC = () => {
 					</Card>
 				</div>
 			</div>
-			{/* Toolbar removed per request */}
+			{/* Scrollable table area */}
+			<div className="flex-1 min-h-0 overflow-auto pr-1">
 			<Card className="shadow-sm">
 				<CardContent className="pt-6 space-y-6">
 						<DataTable<TimesheetEntry, unknown>
@@ -79,6 +81,7 @@ const TimesheetPage: React.FC = () => {
 						/>
 				</CardContent>
 			</Card>
+			</div>
 			<ActivityDialog
 				open={dialogOpen}
 				onOpenChange={setDialogOpen}

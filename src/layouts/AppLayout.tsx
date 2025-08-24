@@ -85,7 +85,7 @@ const AppLayout: React.FC = () => {
 	}
 
 	return (
-		<div className="min-h-screen flex flex-col bg-background text-foreground">
+		<div className="h-screen overflow-hidden flex flex-col bg-background text-foreground">
 			{/* Fixed navbar so vertical overflow in content never affects its width/position */}
 			<header className="fixed top-0 left-0 right-0 w-full z-50 h-14 flex items-center px-4 md:px-6 text-white border-b border-white/5 shadow-[0_2px_4px_-1px_rgba(0,0,0,0.45),0_1px_0_0_rgba(255,255,255,0.04)] bg-[linear-gradient(135deg,#03093A_0%,#041247_35%,#4dafff_52%,#061B6F_100%)]">
 				<div className="flex items-center gap-3 font-semibold tracking-tight select-none">
@@ -104,10 +104,10 @@ const AppLayout: React.FC = () => {
 				</div>
 				<div className="absolute bottom-0 left-0 right-0 h-px bg-[linear-gradient(90deg,transparent,#4dafff80,transparent)]" />
 			</header>
-			{/* Content wrapper with top padding to avoid being hidden behind fixed header */}
-					<div className="flex-1 pt-14">
+			{/* Content area (no scroll); individual pages manage their own scrollable sections */}
+					<div className="flex-1 pt-14 pb-12 flex flex-col overflow-hidden">
 						{(showBack || pageTitle) && (
-								<div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center gap-3 py-6">
+								<div className="w-full px-6 md:px-10 flex items-center gap-3 py-6 max-w-7xl mx-auto">
 								{showBack && (
 									<button
 										onClick={() => { if (window.history.length > 1) navigate(-1); else navigate('/home'); }}
@@ -123,7 +123,7 @@ const AppLayout: React.FC = () => {
 						)}
 						<Outlet />
 					</div>
-			<footer className="py-6 text-center text-xs text-muted-foreground border-t border-[hsl(var(--border))]">© {new Date().getFullYear()} zLink Inc. All Rights Reserved.</footer>
+			<footer className="fixed bottom-0 left-0 right-0 h-8 flex items-center justify-center text-center text-[10px] sm:text-xs text-foreground/70 border-t border-[hsl(var(--border))] bg-white z-40">© {new Date().getFullYear()} zLink Inc. All Rights Reserved.</footer>
 		</div>
 	)
 }
