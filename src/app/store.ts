@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import employeeReducer from '../features/employee/employeeSlice';
 import authReducer from '../features/auth/authSlice';
+import timesheetReducer from '../features/timesheet/timesheetSlice';
 
 const store = configureStore({
   reducer: {
     employee: employeeReducer,
     auth: authReducer,
+    timesheet: timesheetReducer,
   },
 });
 

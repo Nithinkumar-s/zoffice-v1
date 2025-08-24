@@ -3,31 +3,35 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { LogOut, KeyRound, IdCard, ChevronLeft } from 'lucide-react'
 import MyDetailsDialog from '@/components/profile/MyDetailsDialog'
 import ChangePasswordDialog from '@/components/profile/ChangePasswordDialog'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '@/features/auth/authSlice'
+import ProgressBar from '@/components/ui/ProgressBar'
 
 // Shared application layout with persistent navbar (excluded on login route by routing structure)
 const AppLayout: React.FC = () => {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const location = useLocation()
-		const showBack = location.pathname !== '/home' && location.pathname !== '/'
+	const showBack = location.pathname !== '/home' && location.pathname !== '/'
 
-		// Derive page title from path segments
-		const segment = location.pathname.split('/').filter(Boolean)[0] || 'home'
-		const titles: Record<string,string> = {
-			home: '',
-			timesheet: 'Daily Activities',
-			documents: 'Documents',
-			employees: 'Employees',
-			leave: 'Leave',
-			'leave-card': 'Leave Card',
-			'leave-request': 'Leave Request',
-			reports: 'Reports',
-			settings: 'Settings',
-			'theme-demo': 'Theme Demo'
-		}
-		const pageTitle = titles[segment] || ''
+	// Derive page title from path segments
+	const segment = location.pathname.split('/').filter(Boolean)[0] || 'home'
+	const titles: Record<string,string> = {
+		home: '',
+		timesheet: 'Daily Activities',
+		documents: 'Documents',
+		employees: 'Employees',
+		leave: 'Leave',
+		'leave-card': 'Leave Card',
+		'leave-request': 'Leave Request',
+		reports: 'Reports',
+		settings: 'Settings',
+		'theme-demo': 'Theme Demo'
+	}
+	const pageTitle = titles[segment] || ''
+
+	// Global loading state (expand to other slices as needed)
+			const timesheetLoading = useSelector((state: any) => state.timesheet?.loading)
 
 	const MenuItem: React.FC<{ label: string; onSelect: () => void; destructive?: boolean; icon?: React.ReactNode }> = ({ label, onSelect, destructive, icon }) => (
 		<button
@@ -91,48 +95,49 @@ const AppLayout: React.FC = () => {
 		)
 	}
 
-	return (
-		<div className="h-screen overflow-hidden flex flex-col bg-background text-foreground">
-			{/* Fixed navbar so vertical overflow in content never affects its width/position */}
-			<header className="fixed top-0 left-0 right-0 w-full z-50 h-14 flex items-center px-4 md:px-6 text-white border-b border-white/5 shadow-[0_2px_4px_-1px_rgba(0,0,0,0.45),0_1px_0_0_rgba(255,255,255,0.04)] bg-[linear-gradient(135deg,#03093A_0%,#041247_35%,#4dafff_52%,#061B6F_100%)]">
-				<div className="flex items-center gap-3 font-semibold tracking-tight select-none">
-					{/* Logo */}
-					<img
-						src="/logo.svg"
-						alt="zOffice Logo"
-						className="h-8 w-8 object-contain select-none"
-						onError={(e) => { (e.currentTarget.style.display = 'none'); (e.currentTarget.nextElementSibling as HTMLElement)?.classList.remove('sr-only') }}
-					/>
-					<span className="sr-only inline-flex h-8 w-8 items-center justify-center rounded-md bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] text-sm font-bold">z</span>
-					<span className="hidden sm:inline">zOffice</span>
-				</div>
-				<div className="ml-auto flex items-center gap-4 text-sm">
-					<ProfileMenu />
-				</div>
-				<div className="absolute bottom-0 left-0 right-0 h-px bg-[linear-gradient(90deg,transparent,#4dafff80,transparent)]" />
-			</header>
-			{/* Content area (no scroll); individual pages manage their own scrollable sections */}
-					<div className="flex-1 pt-14 pb-12 flex flex-col overflow-hidden">
-						{(showBack || pageTitle) && (
-								<div className="w-full px-6 md:px-10 flex items-center gap-3 py-6 max-w-7xl mx-auto">
-								{showBack && (
-									<button
-										onClick={() => { if (window.history.length > 1) navigate(-1); else navigate('/home'); }}
-										className="inline-flex items-center gap-1 text-sm text-foreground/70 hover:text-foreground transition font-medium cursor-pointer"
-										aria-label="Go back"
-									>
-										<ChevronLeft className="h-4 w-4" />
-										<span>Back</span>
-									</button>
-								)}
-								{pageTitle && <h1 className="text-2xl font-semibold tracking-tight leading-none">{pageTitle}</h1>}
-							</div>
-						)}
-						<Outlet />
+		return (
+					<div className="h-screen overflow-hidden flex flex-col bg-background text-foreground">
+								 <ProgressBar loading={!!timesheetLoading} />
+				{/* Fixed navbar so vertical overflow in content never affects its width/position */}
+				<header className="fixed top-0 left-0 right-0 w-full z-50 h-14 flex items-center px-4 md:px-6 text-white border-b border-white/5 shadow-[0_2px_4px_-1px_rgba(0,0,0,0.45),0_1px_0_0_rgba(255,255,255,0.04)] bg-[linear-gradient(135deg,#03093A_0%,#041247_35%,#4dafff_52%,#061B6F_100%)]">
+					<div className="flex items-center gap-3 font-semibold tracking-tight select-none">
+						{/* Logo */}
+						<img
+							src="/logo.svg"
+							alt="zOffice Logo"
+							className="h-8 w-8 object-contain select-none"
+							onError={(e) => { (e.currentTarget.style.display = 'none'); (e.currentTarget.nextElementSibling as HTMLElement)?.classList.remove('sr-only') }}
+						/>
+						<span className="sr-only inline-flex h-8 w-8 items-center justify-center rounded-md bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] text-sm font-bold">z</span>
+						<span className="hidden sm:inline">zOffice</span>
 					</div>
-			<footer className="fixed bottom-0 left-0 right-0 h-8 flex items-center justify-center text-center text-[10px] sm:text-xs text-foreground/70 border-t border-[hsl(var(--border))] bg-white z-40">© {new Date().getFullYear()} zLink Inc. All Rights Reserved.</footer>
-		</div>
-	)
+					<div className="ml-auto flex items-center gap-4 text-sm">
+						<ProfileMenu />
+					</div>
+					<div className="absolute bottom-0 left-0 right-0 h-px bg-[linear-gradient(90deg,transparent,#4dafff80,transparent)]" />
+				</header>
+				{/* Content area (no scroll); individual pages manage their own scrollable sections */}
+				<div className="flex-1 pt-14 pb-12 flex flex-col overflow-hidden">
+					{(showBack || pageTitle) && (
+						<div className="w-full px-6 md:px-10 flex items-center gap-3 py-6 max-w-7xl mx-auto">
+							{showBack && (
+								<button
+									onClick={() => { if (window.history.length > 1) navigate(-1); else navigate('/home'); }}
+									className="inline-flex items-center gap-1 text-sm text-foreground/70 hover:text-foreground transition font-medium cursor-pointer"
+									aria-label="Go back"
+								>
+									<ChevronLeft className="h-4 w-4" />
+									<span>Back</span>
+								</button>
+							)}
+							{pageTitle && <h1 className="text-2xl font-semibold tracking-tight leading-none">{pageTitle}</h1>}
+						</div>
+					)}
+					<Outlet />
+				</div>
+				<footer className="fixed bottom-0 left-0 right-0 h-8 flex items-center justify-center text-center text-[10px] sm:text-xs text-foreground/70 border-t border-[hsl(var(--border))] bg-white z-40">© {new Date().getFullYear()} zLink Inc. All Rights Reserved.</footer>
+			</div>
+		)
 }
 
 export default AppLayout
