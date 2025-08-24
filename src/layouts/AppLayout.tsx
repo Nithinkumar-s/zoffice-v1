@@ -19,6 +19,7 @@ const AppLayout: React.FC = () => {
 			documents: 'Documents',
 			employees: 'Employees',
 			leave: 'Leave',
+			'leave-card': 'Leave Card',
 			'leave-request': 'Leave Request',
 			reports: 'Reports',
 			settings: 'Settings',
@@ -112,7 +113,7 @@ const AppLayout: React.FC = () => {
 								{showBack && (
 									<button
 										onClick={() => { if (window.history.length > 1) navigate(-1); else navigate('/home'); }}
-										className="inline-flex items-center gap-1 text-sm text-foreground/70 hover:text-foreground transition font-medium"
+										className="inline-flex items-center gap-1 text-sm text-foreground/70 hover:text-foreground transition font-medium cursor-pointer"
 										aria-label="Go back"
 									>
 										<ChevronLeft className="h-4 w-4" />

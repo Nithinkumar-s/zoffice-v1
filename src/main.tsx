@@ -9,6 +9,7 @@ import LoginPage from '@/pages/login'
 import HomePage from '@/pages/home'
 import TimesheetPage from '@/pages/timesheet'
 import LeaveRequestPage from '@/pages/leave-request'
+import LeaveCardPage from '@/pages/leave-card'
 import AppLayout from '@/layouts/AppLayout'
 // import ProtectedRoute from '@/components/auth/ProtectedRoute' // Temporarily disabled per request
 import { useSelector } from 'react-redux'
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
   { path: 'home', element: <HomePage /> },
   { path: 'timesheet', element: <TimesheetPage /> },
   { path: 'leave-request', element: <LeaveRequestPage /> }
+  ,{ path: 'leave-card', element: <LeaveCardPage /> }
     ]
   },
   { path: '*', element: <ErrorFallback /> }

@@ -86,7 +86,7 @@ const HomePage: React.FC = () => {
 								{[
 									{ label: 'Time Sheet', icon: <CalendarClock className="h-7 w-7" />, to: '/timesheet' },
 									{ label: 'Leave Request', icon: <Leaf className="h-7 w-7" />, to: '/leave-request' },
-									{ label: 'Leave Card', icon: <IdCard className="h-7 w-7" /> },
+									{ label: 'Leave Card', icon: <IdCard className="h-7 w-7" />, to: '/leave-card' },
 									{ label: 'Employee Details', icon: <Users className="h-7 w-7" /> },
 									{ label: 'Time Sheet Report', icon: <FileText className="h-7 w-7" /> },
 									{ label: 'Documents', icon: <FolderOpen className="h-7 w-7" /> },
