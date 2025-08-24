@@ -1,0 +1,29 @@
+[
+  {
+    "EmployeeId": 1,
+    "EmployeeCode": "ZL001",
+    "ShortName": "BK",
+    "EmployeeName": "Baiju K. U.",
+    "Designation": "Sr. VP Software Development",
+    "HasSignedHRPolicy": true,
+    "HasSignedInfoSecPolicy": true,
+    "HasSignedRulesOfBehaviour": true,
+    "EmailId": "baiju@zlinkcorp.com",
+    "ContactNumber": "9447458487",
+    "AlternateNumber": "8075860048"
+  },
+  {
+    "EmployeeId": 2,
+    "EmployeeCode": "ZL002",
+    "ShortName": "SP",
+    "EmployeeName": "Sajan P. S.",
+    "Designation": "Project Director",
+    "HasSignedHRPolicy": true,
+    "HasSignedInfoSecPolicy": true,
+    "HasSignedRulesOfBehaviour": true,
+    "EmailId": "sajan@zlinkcorp.com",
+    "ContactNumber": "9447240698",
+    "AlternateNumber": "8015533520"
+  }
+  
+]

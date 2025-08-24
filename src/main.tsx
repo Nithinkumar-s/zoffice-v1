@@ -15,6 +15,7 @@ import AppLayout from '@/layouts/AppLayout'
 import { useSelector } from 'react-redux'
 import type { RootState } from '@/app/store'
 import ErrorFallback from '@/components/ErrorFallback'
+import EmployeeDetailsPage from './pages/employee-details'
 
 // Redirect component to send authenticated users away from login
 const LoginGate: React.FC = () => {
@@ -33,7 +34,8 @@ const router = createBrowserRouter([
   { path: 'home', element: <HomePage /> },
   { path: 'timesheet', element: <TimesheetPage /> },
   { path: 'leave-request', element: <LeaveRequestPage /> }
-  ,{ path: 'leave-card', element: <LeaveCardPage /> }
+  ,{ path: 'leave-card', element: <LeaveCardPage /> },
+  { path: 'employee-details', element: <EmployeeDetailsPage /> }
     ]
   },
   { path: '*', element: <ErrorFallback /> }

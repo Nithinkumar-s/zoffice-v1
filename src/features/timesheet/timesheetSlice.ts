@@ -28,10 +28,7 @@ const initialState: TimesheetState = {
 export const fetchTimesheetData = createAsyncThunk<TimesheetEntry[]>(
   'timesheet/fetchTimesheetData',
   async () => {
-    const response = await fetch('/src/data/timesheet-mock.json');
-    if (!response.ok) throw new Error('Failed to fetch timesheet data');
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    const raw = await response.json();
+    const raw = await (await import('@/lib/httpService')).get('/timesheet');
     const today = new Date().toISOString().slice(0,10);
     return raw.map((e: any) => ({
       id: crypto.randomUUID(),

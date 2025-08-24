@@ -1,4 +1,6 @@
 import React from 'react'
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 
 interface Props { open: boolean; onOpenChange: (v: boolean) => void }
@@ -43,26 +45,26 @@ const ChangePasswordDialog: React.FC<Props> = ({ open, onOpenChange }) => {
             <div className="grid md:grid-cols-2 gap-x-10 gap-y-6">
               <div>
                 <label htmlFor="loginName" className={labelClass}>Login Name:</label>
-                <input id="loginName" disabled value={loginName} className={fieldBase} />
+                <Input id="loginName" disabled value={loginName} className={fieldBase} />
               </div>
               <div>
                 <label htmlFor="oldPassword" className={labelClass}>Old Password:</label>
-                <input id="oldPassword" type="password" value={oldPassword} onBlur={()=>mark('old')} onChange={e=>setOldPassword(e.target.value)} className={fieldBase} />
+                <Input id="oldPassword" type="password" value={oldPassword} onBlur={()=>mark('old')} onChange={e=>setOldPassword(e.target.value)} className={fieldBase} />
               </div>
               <div>
                 <label htmlFor="newPassword" className={labelClass}>New Password:</label>
-                <input id="newPassword" type="password" value={newPassword} onBlur={()=>mark('new')} onChange={e=>setNewPassword(e.target.value)} className={fieldBase + (touched.new && !newPwdValid ? ' border-destructive focus-visible:ring-destructive/40' : '')} />
+                <Input id="newPassword" type="password" value={newPassword} onBlur={()=>mark('new')} onChange={e=>setNewPassword(e.target.value)} className={fieldBase + (touched.new && !newPwdValid ? ' border-destructive focus-visible:ring-destructive/40' : '')} />
                 {errorText('new') && <p className="text-xs text-destructive mt-1">{errorText('new')}</p>}
               </div>
               <div>
                 <label htmlFor="confirmPassword" className={labelClass}>Confirm Password:</label>
-                <input id="confirmPassword" type="password" value={confirmPassword} onBlur={()=>mark('confirm')} onChange={e=>setConfirmPassword(e.target.value)} className={fieldBase + (touched.confirm && !confirmValid ? ' border-destructive focus-visible:ring-destructive/40' : '')} />
+                <Input id="confirmPassword" type="password" value={confirmPassword} onBlur={()=>mark('confirm')} onChange={e=>setConfirmPassword(e.target.value)} className={fieldBase + (touched.confirm && !confirmValid ? ' border-destructive focus-visible:ring-destructive/40' : '')} />
                 {errorText('confirm') && <p className="text-xs text-destructive mt-1">{errorText('confirm')}</p>}
               </div>
             </div>
           </form>
           <div className="pt-4 flex justify-end border-t mt-6">
-            <button disabled={!canSubmit} onClick={(e)=>{e.preventDefault(); if(canSubmit) submit(e as any)}} className={'inline-flex items-center rounded-md text-sm font-medium px-5 py-2.5 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 ' + (canSubmit ? 'bg-primary text-primary-foreground hover:opacity-90' : 'bg-muted text-foreground/50 cursor-not-allowed')}>Update</button>
+            <Button disabled={!canSubmit} onClick={(e)=>{e.preventDefault(); if(canSubmit) submit(e as any)}} type="submit">Update</Button>
           </div>
         </div>
       </DialogContent>

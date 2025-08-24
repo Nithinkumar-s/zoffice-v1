@@ -79,7 +79,7 @@ const HomePage: React.FC = () => {
 										{ label: 'Time Sheet', icon: <CalendarClock className="h-7 w-7" />, to: '/timesheet' },
 										{ label: 'Leave Request', icon: <Leaf className="h-7 w-7" />, to: '/leave-request' },
 										{ label: 'Leave Card', icon: <IdCard className="h-7 w-7" />, to: '/leave-card' },
-										{ label: 'Employee Details', icon: <Users className="h-7 w-7" /> },
+										{ label: 'Employee Details', icon: <Users className="h-7 w-7" />, to: '/employee-details' },
 										{ label: 'Time Sheet Report', icon: <FileText className="h-7 w-7" /> },
 										{ label: 'Reports', icon: <BarChart2 className="h-7 w-7" /> }
 									].map(a => (

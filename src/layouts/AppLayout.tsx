@@ -24,6 +24,7 @@ const AppLayout: React.FC = () => {
 		leave: 'Leave',
 		'leave-card': 'Leave Card',
 		'leave-request': 'Leave Request',
+		'employee-details': 'Employee Details',
 		reports: 'Reports',
 		settings: 'Settings',
 		'theme-demo': 'Theme Demo'

@@ -1,4 +1,6 @@
 import React from 'react'
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 // Static mock of user details – in future this can be loaded from API / store
 interface MyDetailsForm {
@@ -56,14 +58,14 @@ const MyDetailsPage: React.FC = () => {
           <h2 className="text-xl font-semibold tracking-tight">My Details</h2>
           <div className="flex gap-2">
             {!editing && (
-              <button onClick={() => setEditing(true)} className="inline-flex items-center rounded-md bg-primary text-primary-foreground text-sm font-medium px-4 py-2 shadow-sm hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+              <Button onClick={() => setEditing(true)}>
                 Edit
-              </button>
+              </Button>
             )}
             {editing && (
               <>
-                <button type="submit" form="my-details-form" className="inline-flex items-center rounded-md bg-primary text-primary-foreground text-sm font-medium px-4 py-2 shadow-sm hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">Update</button>
-                <button onClick={() => { setForm(initialData); setEditing(false) }} className="inline-flex items-center rounded-md bg-muted text-foreground/80 text-sm font-medium px-4 py-2 shadow-sm hover:bg-muted/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">Cancel</button>
+                <Button type="submit" form="my-details-form">Update</Button>
+                <Button variant="outline" onClick={() => { setForm(initialData); setEditing(false) }}>Cancel</Button>
               </>
             )}
           </div>
@@ -73,51 +75,51 @@ const MyDetailsPage: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-x-10 gap-y-6">
               <div>
                 <label className={labelClass} htmlFor="fullName">Full Name:</label>
-                <input disabled={!editing} id="fullName" name="fullName" value={form.fullName} onChange={onChange} className={fieldClass} />
+                <Input disabled={!editing} id="fullName" name="fullName" value={form.fullName} onChange={onChange} className={fieldClass} />
               </div>
               <div>
                 <label className={labelClass} htmlFor="shortName">Short Name:</label>
-                <input disabled={!editing} id="shortName" name="shortName" value={form.shortName} onChange={onChange} className={fieldClass} />
+                <Input disabled={!editing} id="shortName" name="shortName" value={form.shortName} onChange={onChange} className={fieldClass} />
               </div>
               <div>
                 <label className={labelClass} htmlFor="loginName">Login Name:</label>
-                <input disabled={!editing} id="loginName" name="loginName" value={form.loginName} onChange={onChange} className={fieldClass} />
+                <Input disabled={!editing} id="loginName" name="loginName" value={form.loginName} onChange={onChange} className={fieldClass} />
               </div>
               <div>
                 <label className={labelClass} htmlFor="designation">Designation:</label>
-                <input disabled={!editing} id="designation" name="designation" value={form.designation} onChange={onChange} className={fieldClass} />
+                <Input disabled={!editing} id="designation" name="designation" value={form.designation} onChange={onChange} className={fieldClass} />
               </div>
               <div>
                 <label className={labelClass} htmlFor="employeeCode">Employee Code:</label>
-                <input disabled={!editing} id="employeeCode" name="employeeCode" value={form.employeeCode} onChange={onChange} className={fieldClass} />
+                <Input disabled={!editing} id="employeeCode" name="employeeCode" value={form.employeeCode} onChange={onChange} className={fieldClass} />
               </div>
               <div>
                 <label className={labelClass} htmlFor="pfAccountNo">PF Account No:</label>
-                <input disabled={!editing} id="pfAccountNo" name="pfAccountNo" value={form.pfAccountNo} onChange={onChange} className={fieldClass} />
+                <Input disabled={!editing} id="pfAccountNo" name="pfAccountNo" value={form.pfAccountNo} onChange={onChange} className={fieldClass} />
               </div>
               <div>
                 <label className={labelClass} htmlFor="email">Email Id:</label>
-                <input disabled={!editing} id="email" name="email" value={form.email} onChange={onChange} type="email" className={fieldClass} />
+                <Input disabled={!editing} id="email" name="email" value={form.email} onChange={onChange} type="email" className={fieldClass} />
               </div>
               <div>
                 <label className={labelClass} htmlFor="addressLine1">Address:</label>
-                <input disabled={!editing} id="addressLine1" name="addressLine1" value={form.addressLine1} onChange={onChange} className={fieldClass} />
+                <Input disabled={!editing} id="addressLine1" name="addressLine1" value={form.addressLine1} onChange={onChange} className={fieldClass} />
               </div>
               <div>
                 <label className={labelClass} htmlFor="addressLine2">&nbsp;</label>
-                <input disabled={!editing} id="addressLine2" name="addressLine2" value={form.addressLine2} onChange={onChange} className={fieldClass} />
+                <Input disabled={!editing} id="addressLine2" name="addressLine2" value={form.addressLine2} onChange={onChange} className={fieldClass} />
               </div>
               <div>
                 <label className={labelClass} htmlFor="contactNumber">Contact Number:</label>
-                <input disabled={!editing} id="contactNumber" name="contactNumber" value={form.contactNumber} onChange={onChange} className={fieldClass} />
+                <Input disabled={!editing} id="contactNumber" name="contactNumber" value={form.contactNumber} onChange={onChange} className={fieldClass} />
               </div>
               <div>
                 <label className={labelClass} htmlFor="alternateNumber">Alternate Number:</label>
-                <input disabled={!editing} id="alternateNumber" name="alternateNumber" value={form.alternateNumber} onChange={onChange} className={fieldClass} />
+                <Input disabled={!editing} id="alternateNumber" name="alternateNumber" value={form.alternateNumber} onChange={onChange} className={fieldClass} />
               </div>
               <div className="md:col-span-2">
                 <label className={labelClass} htmlFor="reportTo">Report To:</label>
-                <input disabled={!editing} id="reportTo" name="reportTo" value={form.reportTo} onChange={onChange} className={fieldClass} />
+                <Input disabled={!editing} id="reportTo" name="reportTo" value={form.reportTo} onChange={onChange} className={fieldClass} />
               </div>
             </div>
           </section>
