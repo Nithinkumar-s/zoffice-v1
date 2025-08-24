@@ -9,7 +9,21 @@ const AppLayout: React.FC = () => {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const location = useLocation()
-	const showBack = location.pathname !== '/home' && location.pathname !== '/'
+		const showBack = location.pathname !== '/home' && location.pathname !== '/'
+
+		// Derive page title from path segments
+		const segment = location.pathname.split('/').filter(Boolean)[0] || 'home'
+		const titles: Record<string,string> = {
+			home: '',
+			timesheet: 'Daily Activities',
+			documents: 'Documents',
+			employees: 'Employees',
+			leave: 'Leave',
+			reports: 'Reports',
+			settings: 'Settings',
+			'theme-demo': 'Theme Demo'
+		}
+		const pageTitle = titles[segment] || ''
 
 	const MenuItem: React.FC<{ label: string; onSelect: () => void; destructive?: boolean; icon?: React.ReactNode }> = ({ label, onSelect, destructive, icon }) => (
 		<button
@@ -91,20 +105,24 @@ const AppLayout: React.FC = () => {
 				<div className="absolute bottom-0 left-0 right-0 h-px bg-[linear-gradient(90deg,transparent,#4dafff80,transparent)]" />
 			</header>
 			{/* Content wrapper with top padding to avoid being hidden behind fixed header */}
-			<div className="flex-1 pt-14">
-				<div className="max-w-7xl mx-auto px-4 md:px-6">
-					{showBack && (
-						<button
-							onClick={() => { if (window.history.length > 1) navigate(-1); else navigate('/home'); }}
-							className="mt-4 mb-2 inline-flex items-center gap-1 text-sm text-foreground/70 hover:text-foreground transition font-medium"
-						>
-							<ChevronLeft className="h-4 w-4" />
-							<span>Back</span>
-						</button>
-					)}
-				</div>
-				<Outlet />
-			</div>
+					<div className="flex-1 pt-14">
+						{(showBack || pageTitle) && (
+								<div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center gap-3 py-6">
+								{showBack && (
+									<button
+										onClick={() => { if (window.history.length > 1) navigate(-1); else navigate('/home'); }}
+										className="inline-flex items-center gap-1 text-sm text-foreground/70 hover:text-foreground transition font-medium"
+										aria-label="Go back"
+									>
+										<ChevronLeft className="h-4 w-4" />
+										<span>Back</span>
+									</button>
+								)}
+								{pageTitle && <h1 className="text-2xl font-semibold tracking-tight leading-none">{pageTitle}</h1>}
+							</div>
+						)}
+						<Outlet />
+					</div>
 			<footer className="py-6 text-center text-xs text-muted-foreground border-t border-[hsl(var(--border))]">© {new Date().getFullYear()} zLink Inc. All Rights Reserved.</footer>
 		</div>
 	)

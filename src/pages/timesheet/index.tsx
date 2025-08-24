@@ -23,8 +23,7 @@ const TimesheetPage: React.FC = () => {
 	}
 
 	return (
-		<main className="mx-auto w-full max-w-[1600px] px-6 md:px-10 py-8 space-y-10">
-			<h1 className="text-3xl font-semibold tracking-tight">Daily Activities</h1>
+		<main className="mx-auto w-full max-w-7xl px-6 md:px-10 pb-8 space-y-10">
 			<div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
 				<div className="xl:col-span-7 space-y-6">
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
