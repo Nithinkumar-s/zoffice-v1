@@ -1,0 +1,10 @@
+[
+  {"id":"1","employee":"me","leaveType":"Casual Leave","startDate":"2025-01-03","endDate":"2025-01-03","days":1,"reason":"Hospital visit","status":"Approved"},
+  {"id":"2","employee":"me","leaveType":"Sick Leave","startDate":"2025-01-06","endDate":"2025-01-08","days":3,"reason":"Admit on hospital","status":"Approved"},
+  {"id":"3","employee":"me","leaveType":"Sick Leave","startDate":"2025-01-22","endDate":"2025-01-22","days":1,"reason":"Hospital Visit","status":"Approved"},
+  {"id":"4","employee":"me","leaveType":"Half Day CL","startDate":"2025-03-19T14:15","endDate":"2025-03-19T18:15","days":0.5,"reason":"Due to health issue","status":"Approved"},
+  {"id":"5","employee":"me","leaveType":"Half Day CL","startDate":"2025-03-20T14:15","endDate":"2025-03-20T18:15","days":0.5,"reason":"Sick Leave","status":"Approved"},
+  {"id":"6","employee":"me","leaveType":"Compensatory Off","startDate":"2025-03-21","endDate":"2025-03-21","days":1,"reason":"Health issues","status":"Approved"},
+  {"id":"7","employee":"me","leaveType":"Compensatory Off","startDate":"2025-04-03","endDate":"2025-04-03","days":1,"reason":"Health issue","status":"Approved"},
+  {"id":"8","employee":"me","leaveType":"Restricted Holiday","startDate":"2025-04-17","endDate":"2025-04-17","days":1,"reason":"Personal reason","status":"Approved"}
+]

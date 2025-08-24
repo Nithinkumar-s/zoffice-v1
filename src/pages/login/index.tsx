@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { login } from '@/features/auth/authSlice'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -8,12 +11,19 @@ const LoginPage: React.FC = () => {
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
 	const [loading, setLoading] = useState(false)
+	const navigate = useNavigate()
+	const dispatch = useDispatch()
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault()
-		if (!username || !password) return
+		if (!username || !password || loading) return
 		setLoading(true)
-		setTimeout(() => setLoading(false), 800)
+		// Simulate auth call then redirect
+		setTimeout(() => {
+			setLoading(false)
+			dispatch(login(username))
+			navigate('/home')
+		}, 700)
 	}
 
 	return (
