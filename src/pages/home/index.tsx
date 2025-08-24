@@ -19,7 +19,7 @@ const HomePage: React.FC = () => {
 	// (Removed Leave & Allocation chart data per request)
 
 	return (
-		<main className="mx-auto w-full max-w-7xl px-6 md:px-10 py-10 space-y-10">
+		<main className="mx-auto w-full max-w-7xl px-6 md:px-10 py-10 space-y-10 flex-1 min-h-0 overflow-auto">
 				{/* Unified Welcome + KPIs */}
 				<section>
 					<Card className="border-[hsl(var(--border))] backdrop-blur-sm bg-gradient-to-tr from-[#f6f9ff] via-white to-[#f3f7ff]">
